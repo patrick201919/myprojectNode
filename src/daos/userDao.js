@@ -1,3 +1,4 @@
+import { hash } from "bcrypt";
 import User from "../models/User.js";
 import { getCurrentDate } from "../utils/dateUtils.js";
 
@@ -58,8 +59,7 @@ const updated = async (
   city,
   country,
   telephone,
-  email,
-  password
+  email
 ) => {
   try {
     const user = await User.findByPk(id);
@@ -75,7 +75,6 @@ const updated = async (
       country,
       telephone,
       email,
-      password,
     });
     console.log("user", user);
     return user;
@@ -83,6 +82,17 @@ const updated = async (
     console.log(e.message);
   }
 };
+
+const updatedPassword = async (id, password) => {
+  try {
+    const user = await User.findByPk(id);
+    await user.update({ password });
+    return user;
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 const readById = async (id) => {
   try {
     const user = await User.findByPk(id);
@@ -119,4 +129,5 @@ export const UserDAO = {
   readByEmail,
   readById,
   readAll,
+  updatedPassword,
 };

@@ -9,6 +9,7 @@ const initUsersRoutes = (app, sm, jwM, admin, userAd) => {
   router.post("/create", sm, UserController.signUp);
   router.post("/login", sm, UserController.login);
   router.put("/update", sm, jwM, userAd, UserController.updateUser);
+  router.put("/password", sm, jwM, userAd, UserController.updatePassword);
   router.delete("/delete", sm, jwM, userAd, UserController.deleteUser);
 
   app.use("/users", router);

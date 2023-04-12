@@ -90,25 +90,16 @@ const updateUser = async (req, res) => {
     country,
     telephone,
     email,
-    password,
   } = req.body;
-  console.log("leur", id);
-  console.log("update", name);
 
   const isemailIsValid = emailIsValid(email);
-  const ispasswordIsValid = passwordIsValid(password);
   const isphoneIsValid = phoneIsValid(telephone);
   console.log(telephone);
-  if (!isemailIsValid || !ispasswordIsValid || !isphoneIsValid) {
+  if (!isemailIsValid || !isphoneIsValid) {
     return res
       .status(403)
       .json({ message: ` Email or Phone number or Password is incorrect` });
   }
-  // const existingUser = await User.findOne({ where: { email } });
-  // if (existingUser) {
-  //   return res.status(403).json({ message: `Email already exists` });
-  // }
-  const hash = await bcrypt.hash(password, 10);
   const user = await UserDAO.updated(
     id,
     firstName,
@@ -119,13 +110,34 @@ const updateUser = async (req, res) => {
     city,
     country,
     telephone,
-    email,
-    hash
+    email
   );
   if (user) {
     return res.status(200).json({ message: `User ${id} updated`, data: user });
   } else {
     return res.status(404).json({ message: "Error updating user" });
+  }
+};
+// UserDao -> update Password
+
+const updatePassword = async (req, res) => {
+  const { userId, password } = req.body;
+  console.log("leur", userId);
+  console.log("updatepassword", password);
+
+  const ispasswordIsValid = passwordIsValid(password);
+  console.log(password);
+  if (!ispasswordIsValid) {
+    return res.status(403).json({ message: ` Password is incorrect` });
+  }
+  const hash = await bcrypt.hash(password, 10);
+  const newPassword = await UserDAO.updatedPassword(userId, hash);
+  if (newPassword) {
+    return res
+      .status(200)
+      .json({ message: `Password ${userId} updated`, data: newPassword });
+  } else {
+    return res.status(404).json({ message: "Error updating password" });
   }
 };
 // UserDao -> deleted
@@ -167,4 +179,5 @@ export const UserController = {
   deleteUser,
   readUsers,
   readOne,
+  updatePassword,
 };

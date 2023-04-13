@@ -19,6 +19,10 @@ const User = dbConnection.db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    age: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     birthDay: {
       type: DataTypes.DATEONLY,
       allowNull: false,
@@ -56,6 +60,18 @@ const User = dbConnection.db.define(
       type: DataTypes.INTEGER,
       defaultValue: USER_ROLE.member,
       allowNull: false,
+    },
+    drivingLicenseNumber: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    permitIssuedOn: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    licenseIssuedBy: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {

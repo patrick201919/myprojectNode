@@ -5,6 +5,7 @@ import { getCurrentDate } from "../utils/dateUtils.js";
 const created = async (
   firstName,
   name,
+  age,
   birthDay,
   address,
   postCode,
@@ -12,7 +13,10 @@ const created = async (
   country,
   telephone,
   email,
-  password
+  password,
+  drivingLicenseNumber,
+  permitIssuedOn,
+  licenseIssuedBy
 ) => {
   let result = null;
   let error = `${getCurrentDate()} : `;
@@ -20,6 +24,7 @@ const created = async (
     const newUser = await User.create({
       firstName,
       name,
+      age,
       birthDay,
       address,
       postCode,
@@ -28,6 +33,9 @@ const created = async (
       telephone,
       email,
       password,
+      drivingLicenseNumber,
+      permitIssuedOn,
+      licenseIssuedBy,
     });
 
     error = newUser ? null : error + `user not find`;
@@ -53,13 +61,17 @@ const updated = async (
   id,
   firstName,
   name,
+  age,
   birthDay,
   address,
   postCode,
   city,
   country,
   telephone,
-  email
+  email,
+  drivingLicenseNumber,
+  permitIssuedOn,
+  licenseIssuedBy
 ) => {
   try {
     const user = await User.findByPk(id);
@@ -68,6 +80,7 @@ const updated = async (
     await user.update({
       firstName,
       name,
+      age,
       birthDay,
       address,
       postCode,
@@ -75,6 +88,9 @@ const updated = async (
       country,
       telephone,
       email,
+      drivingLicenseNumber,
+      permitIssuedOn,
+      licenseIssuedBy,
     });
     console.log("user", user);
     return user;

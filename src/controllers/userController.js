@@ -13,6 +13,7 @@ const signUp = async (req, res) => {
   const {
     firstName,
     name,
+    age,
     birthDay,
     address,
     postCode,
@@ -21,6 +22,9 @@ const signUp = async (req, res) => {
     telephone,
     email,
     password,
+    drivingLicenseNumber,
+    permitIssuedOn,
+    licenseIssuedBy,
   } = req.body;
 
   const isemailIsValid = emailIsValid(email);
@@ -40,6 +44,7 @@ const signUp = async (req, res) => {
   const user = await UserDAO.created(
     firstName,
     name,
+    age,
     birthDay,
     address,
     postCode,
@@ -47,7 +52,10 @@ const signUp = async (req, res) => {
     country,
     telephone,
     email,
-    hash
+    hash,
+    drivingLicenseNumber,
+    permitIssuedOn,
+    licenseIssuedBy
   );
   if (!user) {
     return res.status(403).json({ message: `User not found` });
@@ -83,6 +91,7 @@ const updateUser = async (req, res) => {
     id,
     firstName,
     name,
+    age,
     birthDay,
     address,
     postCode,
@@ -90,6 +99,9 @@ const updateUser = async (req, res) => {
     country,
     telephone,
     email,
+    drivingLicenseNumber,
+    permitIssuedOn,
+    licenseIssuedBy,
   } = req.body;
 
   const isemailIsValid = emailIsValid(email);
@@ -104,13 +116,17 @@ const updateUser = async (req, res) => {
     id,
     firstName,
     name,
+    age,
     birthDay,
     address,
     postCode,
     city,
     country,
     telephone,
-    email
+    email,
+    drivingLicenseNumber,
+    permitIssuedOn,
+    licenseIssuedBy
   );
   if (user) {
     return res.status(200).json({ message: `User ${id} updated`, data: user });

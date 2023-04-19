@@ -19,7 +19,7 @@ export const userAdmin = async (req, res, next) => {
   try {
     const userId = jwtVerify(token);
     const user = await User.findByPk(userId);
-    console.log(user.role);
+    console.log("userAdmin", user.role);
     if (user && user.role === USER_ROLE.admin) {
       return next();
     } else if (user.role === USER_ROLE.member && user.id === userId) {

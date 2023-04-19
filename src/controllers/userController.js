@@ -86,6 +86,7 @@ const login = async (req, res) => {
   });
 };
 
+// Update By User
 const updateUser = async (req, res) => {
   const {
     id,
@@ -106,7 +107,6 @@ const updateUser = async (req, res) => {
 
   const isemailIsValid = emailIsValid(email);
   const isphoneIsValid = phoneIsValid(telephone);
-  console.log(telephone);
   if (!isemailIsValid || !isphoneIsValid) {
     return res
       .status(403)
@@ -124,6 +124,52 @@ const updateUser = async (req, res) => {
     country,
     telephone,
     email,
+    drivingLicenseNumber,
+    permitIssuedOn,
+    licenseIssuedBy
+  );
+  if (user) {
+    return res.status(200).json({ message: `User ${id} updated`, data: user });
+  } else {
+    return res.status(404).json({ message: "Error updating user" });
+  }
+};
+
+// Update by Admin
+const updateUserAdmin = async (req, res) => {
+  const {
+    id,
+    firstName,
+    name,
+    age,
+    birthDay,
+    address,
+    postCode,
+    city,
+    country,
+    telephone,
+    role,
+    drivingLicenseNumber,
+    permitIssuedOn,
+    licenseIssuedBy,
+  } = req.body;
+
+  const isphoneIsValid = phoneIsValid(telephone);
+  if (!isphoneIsValid) {
+    return res.status(403).json({ message: ` Phone number is incorrect` });
+  }
+  const user = await UserDAO.updatedAdmin(
+    id,
+    firstName,
+    name,
+    age,
+    birthDay,
+    address,
+    postCode,
+    city,
+    country,
+    telephone,
+    role,
     drivingLicenseNumber,
     permitIssuedOn,
     licenseIssuedBy
@@ -196,4 +242,5 @@ export const UserController = {
   readUsers,
   readOne,
   updatePassword,
+  updateUserAdmin,
 };

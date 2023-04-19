@@ -99,6 +99,48 @@ const updated = async (
   }
 };
 
+const updatedAdmin = async (
+  id,
+  firstName,
+  name,
+  age,
+  birthDay,
+  address,
+  postCode,
+  city,
+  country,
+  telephone,
+  role,
+  drivingLicenseNumber,
+  permitIssuedOn,
+  licenseIssuedBy
+) => {
+  try {
+    const user = await User.findByPk(id);
+    // const user = await User.findOne({ where: { id } });
+
+    await user.update({
+      firstName,
+      name,
+      age,
+      birthDay,
+      address,
+      postCode,
+      city,
+      country,
+      telephone,
+      role,
+      drivingLicenseNumber,
+      permitIssuedOn,
+      licenseIssuedBy,
+    });
+    console.log("user", user);
+    return user;
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 const updatedPassword = async (id, password) => {
   try {
     const user = await User.findByPk(id);
@@ -146,4 +188,5 @@ export const UserDAO = {
   readById,
   readAll,
   updatedPassword,
+  updatedAdmin,
 };

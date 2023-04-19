@@ -6,7 +6,7 @@ class Connection {
     if (!!this.db) return;
 
     try {
-      this.db = new Sequelize("ElectroDrive", "root", "root", {
+      this.db = new Sequelize("Electro_Drive", "root", "root", {
         host: "localhost",
         port: 8889,
         dialect: "mariadb",

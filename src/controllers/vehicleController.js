@@ -43,8 +43,9 @@ const createV = async (req, res) => {
 };
 
 const updateV = async (req, res) => {
-  const id = parseInt(req.params.id);
+  // const id = parseInt(req.params.id);
   const {
+    id,
     typeOfVehicle,
     brand,
     vehicleNumber,
@@ -80,6 +81,7 @@ const updateV = async (req, res) => {
     priceByDay
   );
   if (vehicle) {
+    console.log("retoutver", vehicle);
     return res
       .status(200)
       .json({ message: `Vehicle ${id} updated`, data: vehicle });
@@ -89,7 +91,9 @@ const updateV = async (req, res) => {
 };
 
 const deleteV = async (req, res) => {
-  const id = parseInt(req.params.id);
+  const { id } = req.body;
+  //const { id } = parseInt(req.body);
+  console.log("qsfqsfcq", id);
   const vehicle = await VehicleDAO.deleted(id);
   if (vehicle) {
     return res

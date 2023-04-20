@@ -1,7 +1,7 @@
 import { UserDAO } from "../daos/userDao.js";
 import bcrypt from "bcrypt";
 import User from "../models/User.js";
-import { jwtSign } from "../utils/jwtUtils.js";
+import { jwtSign, jwtVerify } from "../utils/jwtUtils.js";
 import { stringIsFilled } from "../utils/stringUtils.js";
 import {
   emailIsValid,
@@ -80,8 +80,13 @@ const login = async (req, res) => {
   }
   const token = jwtSign(user.id);
 
+  const userId = jwtVerify(token);
+  const userRole = await User.findByPk(userId);
+  const role = userRole.role;
+
   return res.json({
     message: "User logged in successfully",
+    role,
     token,
   });
 };

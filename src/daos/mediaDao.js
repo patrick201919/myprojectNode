@@ -1,13 +1,14 @@
 import Media from "../models/Media.js";
 import { getCurrentDate } from "../utils/dateUtils.js";
 
-const created = async (image, description) => {
+const created = async (image, description, vehicleId) => {
   let result = null;
   let error = `${getCurrentDate()} : `;
   try {
     const newMedia = await Media.create({
       image,
       description,
+      vehicleId,
     });
 
     error = newMedia ? null : error + `Media not find`;

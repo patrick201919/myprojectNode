@@ -1,3 +1,4 @@
+import Media from "../models/Media.js";
 import Vehicle from "../models/Vehicle.js";
 import { getCurrentDate } from "../utils/dateUtils.js";
 
@@ -111,7 +112,12 @@ const readById = async (id) => {
 
 const readAll = async () => {
   try {
-    const vehicles = await Vehicle.findAll();
+    const vehicles = await Vehicle.findAll({
+      include: {
+        model: Media,
+      },
+      order: [["createdAt", "DESC"]],
+    });
     return vehicles;
   } catch (e) {
     console.log(e.message);

@@ -1,9 +1,10 @@
 import { MediaDAO } from "../daos/mediaDao.js";
 
 const createM = async (req, res) => {
-  const { image, description } = req.body;
+  const { image, description, vehicleId } = req.body;
+  console.log("cretemediacLeur", image, description, vehicleId);
 
-  const media = await MediaDAO.created(image, description);
+  const media = await MediaDAO.created(image, description, vehicleId);
   if (!media) {
     return res.status(400).json({ message: `Not successful media` });
   }
@@ -11,8 +12,7 @@ const createM = async (req, res) => {
 };
 
 const updateM = async (req, res) => {
-  const id = parseInt(req.params.id);
-  const { image, description } = req.body;
+  const { id, image, description } = req.body;
   const media = await MediaDAO.updated(id, image, description);
   if (media) {
     return res

@@ -3,17 +3,6 @@ import { jwtVerify } from "../utils/jwtUtils.js";
 import { USER_ROLE } from "../constants/userConstant.js";
 import Reservation from "../models/Reservation.js";
 
-export const roleAdmin = async (req, res, next) => {
-  const userId = jwtVerify(token);
-  const user = await User.findByPk(userId);
-  const roleUser = user.role;
-  if (user && user.role === USER_ROLE.admin) {
-    return roleUser;
-  } else {
-    return res.status(404).json({ message: "access forbidden" });
-  }
-};
-
 export const admin = async (req, res, next) => {
   const token = req.headers.authorization;
   const userId = jwtVerify(token);
@@ -31,9 +20,9 @@ export const userAdmin = async (req, res, next) => {
     const userId = jwtVerify(token);
     const user = await User.findByPk(userId);
     console.log("userAdmin", user.role);
-    if (user && user.role === USER_ROLE.admin) {
+    if (user && user.role === USER_ROLE.admin && user.id === userId) {
       return next();
-    } else if (user.role === USER_ROLE.member && user.id === userId) {
+    } else if (user && user.role === USER_ROLE.member && user.id === userId) {
       return next();
     }
   } catch (e) {
